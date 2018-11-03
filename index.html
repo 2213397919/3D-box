@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        /*开启相对定位，开启3D空间，调整盒子的旋转中心点*/
+        #wrap{
+            margin: 250px auto;
+            width: 200px;
+            height: 200px;
+            /*background: rgba(255,0,0,.3);*/
+            position: relative;
+
+            transform-style: preserve-3d;
+
+            transform-origin: 50% 50% -100px;
+
+
+            /*transform: rotateX(0deg) rotateY(0deg);*/
+        }
+        /*开启绝对定位，让所有的元素合在一起。*/
+        .box{
+            position: absolute;
+            top: 0;
+            left: 0px;
+            width: 200px;
+            height: 200px;
+            line-height: 200px;
+            font-weight: bold;
+            text-align: center;
+            opacity: 0.5;
+            transition: 1s;
+        }
+        .box1{
+            background: rgba(0,0,0,.3);
+        }
+        /*把每一个盒子定位到指定的位置，找到变换基点，旋转90°（分清元素左上角翻转的里外）。*/
+        .box2{
+            top:-200px;
+            transform-origin: bottom;
+            transform: rotateX(90deg);
+
+            background: rgba(0,255,0,.5);
+        }
+        .box3{
+            left: 200px;
+            transform-origin: left;
+            transform: rotateY(90deg);
+
+            background: rgba(0,0,255,.5);
+        }
+        .box4{
+            top:200px;
+            transform-origin: top;
+            transform: rotateX(-90deg);
+
+            background: rgba(255,255,0,.5);
+        }
+        .box5{
+            left: -200px;
+            transform-origin: right;
+            transform: rotateY(-90deg);
+
+            background: rgba(0,255,255,.5);
+        }
+        .box6 {
+            /*rotateY(180deg) 正面向外*/
+            transform: translateZ(-200px) rotateY(180deg);
+            background: rgba(255, 0, 255, .5);
+        }
+        .box img{
+            width: 100%;
+            height: 100%;
+        }
+        /*里面嵌套的小盒子*/
+        /*开启绝对定位*/
+        .inner{
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            top:50px;
+            left: 50px;
+        }
+        /*固定图片的宽高*/
+        .inner img{
+            width: 100%;
+            height: 100%;
+        }
+        .inn1{
+            transform: translateZ(-50px);
+        }
+        /*让小盒子的定位到合适的位置，先让往中心移动translateZ(-50px)，最后在翻转角度将盒子拼在一起。*/
+        .inn2{
+            top:-50px;
+            transform-origin: bottom;
+            transform:translateZ(-50px) rotateX(90deg);
+        }
+        .inn3{
+            left: 150px;
+            transform-origin: left;
+            transform: translateZ(-50px) rotateY(90deg);
+        }
+        .inn4{
+            top:150px;
+            transform-origin: top;
+            transform: translateZ(-50px) rotateX(-90deg);
+        }
+        .inn5{
+            left:-50px;
+            transform-origin: right;
+            transform:translateZ(-50px)  rotateY(-90deg);
+        }
+        .inn6{
+            transform: translateZ(-150px) rotateY(180deg);
+        }
+        /*当鼠标移入外面的大盒子，盒子散开，实际上就是z轴往外移动。注意先翻转角度在移动。*/
+        #wrap:hover .box1{
+            transform: translateZ(100px);
+        }
+        #wrap:hover .box2{
+            transform: rotateX(90deg) translateZ(100px)  ;
+        }
+        #wrap:hover .box3{
+            transform: rotateY(90deg) translateZ(100px)  ;
+        }
+        #wrap:hover .box4{
+            transform: rotateX(-90deg) translateZ(100px)  ;
+        }
+        #wrap:hover .box5{
+            transform: rotateY(-90deg) translateZ(100px)  ;
+        }
+        #wrap:hover .box6{
+            transform: translateZ(-300px) rotateY(180deg)   ;
+        }
+    </style>
+</head>
+<body>
+<div id="wrap">
+    <div class="box box1"><img src="img/1.jpeg"></div>
+    <div class="box box2"><img src="img/2.jpeg"></div>
+    <div class="box box3"><img src="img/3.jpeg"></div>
+    <div class="box box4"><img src="img/4.jpeg"></div>
+    <div class="box box5"><img src="img/5.jpeg"></div>
+    <div class="box box6"><img src="img/6.jpg"></div>
+    <div class="inner inn1"><img src="img/1.jpeg"></div>
+    <div class="inner inn2"><img src="img/2.jpeg"></div>
+    <div class="inner inn3"><img src="img/3.jpeg"></div>
+    <div class="inner inn4"><img src="img/4.jpeg"></div>
+    <div class="inner inn5"><img src="img/5.jpeg"></div>
+    <div class="inner inn6"><img src="img/6.jpg"></div>
+    <script>
+        <!--设置定时器,让盒子每个一段时间旋转一定角度.-->
+        window.onload=function () {
+            var wrap=document.getElementById("wrap");
+            var num=0;
+            setInterval(function () {
+                num++;
+                wrap.style.transform='rotateX('+ num +'deg) rotateY(' +num +'deg)';
+            },50);
+        }
+    </script>
+</div>
+</body>
+</html>
